@@ -32,21 +32,21 @@ public class LoginPanel : Panel
         this.m_onCompletedLogin = onCompletedLogin;
     }
 
-    private bool TryGetValidateUserInfo(out string userName, out string userPassword, out string message)
+    private bool TryGetValidateUserInfo(out string userName, out string userPassword, out string invalideMessage)
     {
         userName = userNameInput.text;
         userPassword = userPasswordInput.text;
-        message = string.Empty;
+        invalideMessage = string.Empty;
 
         if (userName.IsNullOrEmpty())
         {
-            message = $"Please enter name";
+            invalideMessage = $"Please enter name";
             return false;
         }
 
         if (userPassword.IsNullOrEmpty())
         {
-            message = $"Please enter password";
+            invalideMessage = $"Please enter password";
             return false;
         }
 
@@ -55,12 +55,12 @@ public class LoginPanel : Panel
 
     private void OnLoginButtonClick()
     {
-        if (!TryGetValidateUserInfo(out string userName, out string userPassword, out string message))
+        if (!TryGetValidateUserInfo(out string userName, out string userPassword, out string invalideMessage))
         {
             var popupInfo = PopupInfo.GetAcceptOnlyInfoWithDoNothing(
                 PopupType.Error,
                 title: "Error",
-                message,
+                invalideMessage,
                 acceptButtonLabel: "OK");
 
             UIManager.Instance.CreateThenOpenPopupPanel<PopupPanel>(popupInfo);
@@ -91,7 +91,7 @@ public class LoginPanel : Panel
             var popupInfo = PopupInfo.GetAcceptOnlyInfo(
                 PopupType.Info,
                 title: "Successfully",
-                message: "Your login successfully",
+                message: "Your login account successfully",
                 acceptButtonLabel: "continuse",
                 onAccept: Continuse);
 

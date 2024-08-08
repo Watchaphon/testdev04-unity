@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using StateMachine;
 
-public class GameLobbyState : State<GameStateType, GameManager>
+public class GameLobbyState : State<GameStateType>
 {
     public override GameStateType type => GameStateType.Lobby;
 

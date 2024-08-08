@@ -1,7 +1,6 @@
 using APIService.Server;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Diagnostics;
 
 public class UserManager
 {

@@ -1,7 +1,6 @@
-using UnityEngine;
 using StateMachine;
 
-public class GameInitializeState : State<GameStateType, GameManager>
+public class GameInitializeState : State<GameStateType>
 {
     public override GameStateType type => GameStateType.Initialize;
 

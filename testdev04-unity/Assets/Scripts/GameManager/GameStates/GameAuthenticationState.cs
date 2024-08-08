@@ -1,6 +1,6 @@
 using StateMachine;
 
-public class GameAuthenticationState : State<GameStateType, GameManager>
+public class GameAuthenticationState : State<GameStateType>
 {
     public override GameStateType type => GameStateType.Authentication;
 

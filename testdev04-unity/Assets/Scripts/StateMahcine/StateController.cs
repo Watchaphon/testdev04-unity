@@ -6,13 +6,8 @@ namespace StateMachine
     /// <summary>
     /// This is state controller of state machine system.
     /// </summary>
-    public class StateController<TType, TContext>
+    public class StateController<TType>
     {
-        /// <summary>
-        /// The property that your can custom to very state you create that accessable for the property.
-        /// </summary>
-        public TContext context { get; private set; }
-
         public TType priviousStateType { get; private set; }
 
         public TType currentStateType
@@ -28,11 +23,11 @@ namespace StateMachine
             }
         }
 
-        public State<TType, TContext> curretState { get; private set; }
+        public State<TType> curretState { get; private set; }
 
-        private Dictionary<TType, State<TType, TContext>> StateConten = new Dictionary<TType, State<TType, TContext>>();
+        private Dictionary<TType, State<TType>> StateConten = new Dictionary<TType, State<TType>>();
 
-        public void SetConten(State<TType, TContext> state)
+        public void SetConten(State<TType> state)
         {
             if(StateConten.ContainsKey(state.type))
             {
@@ -41,11 +36,6 @@ namespace StateMachine
             }
 
             StateConten.Add(state.type, state);
-        }
-
-        public void SetContext(TContext context)
-        {
-            this.context = context;
         }
 
         /// <summary>
@@ -67,7 +57,7 @@ namespace StateMachine
         /// Call for change state to target state.
         /// </summary>
         /// <param name="state"></param>
-        public virtual void Change(State<TType, TContext> state)
+        public virtual void Change(State<TType> state)
         {
             if (curretState != null)
             {

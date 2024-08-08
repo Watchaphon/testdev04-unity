@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private StateController<GameStateType, GameManager> m_stateController;
+    private StateController<GameStateType> m_stateController;
 
     private GameInitializeState m_InitializeState;
     private GameAuthenticationState m_AuthenticationState;
@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
         m_AuthenticationState = new();
         m_LobbyState = new();
 
-        m_stateController.SetContext(this);
         m_stateController.SetConten(m_InitializeState);
         m_stateController.SetConten(m_AuthenticationState);
         m_stateController.SetConten(m_LobbyState);

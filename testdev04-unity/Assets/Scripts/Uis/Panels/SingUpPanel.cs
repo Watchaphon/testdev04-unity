@@ -25,34 +25,34 @@ public class SingUpPanel : Panel
         backButton.onClick.AddListener(OnBackButtonClick);
     }
 
-    private bool TryGetValidateUserInfo(out string userName, out string userPassword, out string message)
+    private bool TryGetValidateUserInfo(out string userName, out string userPassword, out string invalideMessage)
     {
         userName = userNameInput.text;
         userPassword = userPasswordInput.text;
-        message = string.Empty;
+        invalideMessage = string.Empty;
 
         if (userName.IsNullOrEmpty())
         {
-            message = $"Please enter name";
+            invalideMessage = $"Please enter name";
             return false;
         }
 
         if (userPassword.IsNullOrEmpty())
         {
-            message = $"Please enter password";
+            invalideMessage = $"Please enter password";
             return false;
         }
 
         string userPassworldConfirm = userConfirmPasswordInput.text;
         if (userPassworldConfirm.IsNullOrEmpty())
         {
-            message = $"Please confirm name";
+            invalideMessage = $"Please confirm name";
             return false;
         }
 
         if (userPassword != userPassworldConfirm)
         {
-            message = $"Password not matches";
+            invalideMessage = $"Password not matches";
             return false;
         }
 
@@ -62,12 +62,12 @@ public class SingUpPanel : Panel
   
     private void OnSingUpButtonClick()
     {
-        if (!TryGetValidateUserInfo(out string userName, out string userPassword, out string message))
+        if (!TryGetValidateUserInfo(out string userName, out string userPassword, out string invalideMessage))
         {
             var popupInfo = PopupInfo.GetAcceptOnlyInfoWithDoNothing(
                 PopupType.Error,
                 title: "Error",
-                message,
+                invalideMessage,
                 acceptButtonLabel: "OK");
 
             UIManager.Instance.CreateThenOpenPopupPanel<PopupPanel>(popupInfo);
@@ -79,6 +79,7 @@ public class SingUpPanel : Panel
 
     private async UniTask SendSingUpRequest(string userName, string userPassword)
     {
+        UIManager.Instance.OpenLoadingPanel();
 
         try
         {
@@ -98,9 +99,13 @@ public class SingUpPanel : Panel
                 onAccept: Close);
 
             UIManager.Instance.CreateThenOpenPopupPanel<PopupPanel>(popupInfo);
+
+            UIManager.Instance.CloseLoadingPanel();
         }
         catch (Exception exception)
         {
+            UIManager.Instance.CloseLoadingPanel();
+
             ExceptionDisplayer.Show(exception);
         }
     }
